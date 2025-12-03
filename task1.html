@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Neon Portfolio — Twinkle Pal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#071017;
+      --panel:#08121a;
+      --muted:#9aa7b2;
+      --accent:#7cf2ff; /* neon cyan */
+      --accent-2:#ff6bcb; /* neon pink */
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --card-shadow: 0 10px 30px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+      --glass-border: rgba(124,242,255,0.08);
+      --glass-border-2: rgba(255,107,203,0.06);
+      --radius: 14px;
+    }
+    [data-theme='light']{
+      --bg: #071017; /* keep dark but change accents */
+      --panel:#07121a;
+      --muted:#9aa7b2;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#02050a);color:#e6f7ff}
+
+    /* Page layout */
+    .container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:28px
+    }
+    header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px
+    }
+    .logo{
+    display:flex;
+    align-items:center;
+    gap:12px
+    }
+    .logo .mark{
+    font-family:'Press Start 2P',monospace;
+    font-size:13px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent}
+    nav a{
+    color:var(--muted);
+    text-decoration:none;
+    margin-left:18px;
+    font-weight:600}
+    nav a:hover{
+    color:var(--accent)
+    }
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center;margin-top:28px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:var(--radius);box-shadow:var(--card-shadow);border:1px solid var(--glass-border)}
+    .hero h1{font-size:34px;margin:0 0 10px;line-height:1.02}
+    .typing{color:var(--accent);font-weight:700}
+    .hero p{color:var(--muted);margin-top:6px}
+    .hero-cta{display:flex;gap:12px;margin-top:18px}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:12px;color:#02101a;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(124,242,255,0.08)}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px;color:var(--muted)}
+
+    /* Side card */
+    .side-card{border-radius:var(--radius);padding:18px;background:linear-gradient(180deg,var(--panel), rgba(255,255,255,0.01));border:1px solid var(--glass-border-2)}
+    .avatar{width:86px;height:86px;border-radius:14px;display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 8px 30px rgba(255,107,203,0.08);}
+    .role{color:var(--muted);font-size:13px;margin-top:8px}
+
+    /* Sections */
+    section{margin-top:28px}
+    .section-title{display:flex;align-items:center;gap:12px}
+    .section-title h2{margin:0;font-size:18px}
+    .divider{height:1px;background:linear-gradient(90deg, transparent, rgba(124,242,255,0.06), transparent);flex:1;border-radius:2px}
+
+    /* About */
+    .about{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(124,242,255,0.02), rgba(255,107,203,0.01));border:1px solid var(--glass-border)}
+
+    /* Skills */
+    .skills-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+    .skill{width:110px;height:110px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s}
+    .skill .ico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#02101a}
+    .skill span{font-size:13px;margin-top:8px;color:var(--muted)}
+    .skill:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 18px 40px rgba(124,242,255,0.06)}
+
+    /* Work / Carousel */
+    .carousel{position:relative;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(2,6,23,0.4), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    .slides{display:flex;gap:18px;overflow:hidden}
+    .slide{min-width:320px;flex:0 0 320px;border-radius:12px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.02)}
+    .slide h3{margin:0;font-size:16px}
+    .carousel-controls{position:absolute;right:18px;top:18px;display:flex;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.06)}
+    .dot.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 20px rgba(124,242,255,0.06)}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    .contact-form input,.contact-form textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;margin-bottom:10px}
+
+    /* Chatbot */
+    .chatbot-btn{position:fixed;right:22px;bottom:110px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:64px;height:64px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    .chatbot-drawer{position:fixed;right:22px;bottom:188px;width:360px;max-width:92vw;border-radius:12px;background:linear-gradient(180deg,#031018, #041223);border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(2,6,23,0.6);overflow:hidden;display:flex;flex-direction:column}
+    .chat-header{padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.02)}
+    .messages{padding:12px;display:flex;flex-direction:column;gap:10px;height:300px;overflow:auto}
+    .msg{max-width:78%;padding:8px 12px;border-radius:12px}
+    .msg.user{align-self:flex-end;background:linear-gradient(90deg,#0a2831,#06202a);border:1px solid rgba(124,242,255,0.04)}
+    .msg.bot{align-self:flex-start;background:linear-gradient(90deg,#07131a,#06121a);border:1px solid rgba(255,107,203,0.03)}
+    .chat-input{display:flex;padding:10px;border-top:1px solid rgba(255,255,255,0.02);gap:10px}
+    .chat-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent}
+    .theme-toggle{position:fixed;left:22px;bottom:22px;background:transparent;padding:10px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);backdrop-filter: blur(6px);cursor:pointer}
+
+    /* Floating theme button with neon glow */
+    .theme-toggle .moon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 12px 40px rgba(124,242,255,0.12)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .about{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      .carousel .slides{gap:14px}
+    }
+
+    /* small flourish */
+    footer{margin-top:34px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* subtle animations */
+    .glow{animation:neon 2.8s ease-in-out infinite}
+    @keyframes neon{0%{filter:drop-shadow(0 0 0 rgba(124,242,255,0.06))}50%{filter:drop-shadow(0 10px 40px rgba(124,242,255,0.18))}100%{filter:drop-shadow(0 0 0 rgba(124,242,255,0.06))}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="mark">TW</div>
+        <div>
+          <div style="font-weight:800">Twinkle Pal</div>
+          <div style="font-size:12px;color:var(--muted)">Frontend Developer • Designer</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-card">
+        <h1>Hi, I'm <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent">Twinkle</span></h1>
+        <div class="typing" id="typing"></div>
+        <p>My name is Twinkle Pal. I am currently pursuing BCA from CHRIST Delhi NCR. I am in my 3rd year. My skills are especialised in python, ai ml and analysis.</p>
+        <div class="hero-cta">
+          <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire me</button>
+          <button class="ghost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See my work</button>
+        </div>
+      </div>
+
+      <aside class="side-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <img class="avatar" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-Photo.png">
+            <div class="role">Frontend • Bckend • Python • JS</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700;font-size:18px">Available</div>
+            <div style="font-size:12px;color:var(--muted)">Open to internships & projects</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;color:var(--muted);font-size:13px">Quick Info</div>
+        <ul style="margin:8px 0 0 18px;color:var(--muted);font-size:13px">
+          <li>Location: India</li>
+          <li>EMAIL: twinkle@gmail.com</li>
+        </ul>
+      </aside>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-title"><h2>About</h2><div class="divider"></div></div>
+      <div class="about">
+        <div class="card">
+          <p>I craft pixel-perfect interfaces with focused attention on UX, accessibility and performance. I enjoy building small JS utilities and delightful micro-interactions. I love working in dark/neon themes and creating bold visual identities.</p>
+          <p style="color:var(--muted)">When I'm not coding I sketch UI ideas, experiment with micro-animations and binge weird sci-fi shows.</p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Quick Facts</h3>
+          <p style="margin:6px 0;color:var(--muted)">Graduation: BCA Honours — CHRIST University</p>
+          <p style="margin:6px 0;color:var(--muted)">Interests: UI design, Animations, Web performance</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-title"><h2>Skills</h2><div class="divider"></div></div>
+      <div class="skills-grid" aria-live="polite">
+        <div class="skill" data-skill="HTML5">
+          <div class="ico">H</div>
+          <span>HTML5</span>
+        </div>
+        <div class="skill" data-skill="CSS3">
+          <div class="ico">C</div>
+          <span>CSS3</span>
+        </div>
+        <div class="skill" data-skill="JavaScript">
+          <div class="ico">JS</div>
+          <span>JavaScript</span>
+        </div>
+        <div class="skill" data-skill="React">
+          <div class="ico">R</div>
+          <span>React</span>
+        </div>
+        <div class="skill" data-skill="Figma">
+          <div class="ico">F</div>
+          <span>Figma</span>
+        </div>
+        <div class="skill" data-skill="Git">
+          <div class="ico">G</div>
+          <span>Git</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK / CAROUSEL -->
+    <section id="work">
+      <div class="section-title"><h2>Work</h2><div class="divider"></div></div>
+      <div class="carousel">
+        <div class="carousel-controls" aria-hidden="true">
+          <div id="prev" class="dot" title="Previous"></div>
+          <div id="playPause" class="dot" title="Play/Pause"></div>
+          <div id="next" class="dot" title="Next"></div>
+        </div>
+        <div class="slides" id="slides" role="list">
+          <article class="slide" role="listitem">
+            <h3>Project Aurora</h3>
+            <p style="color:var(--muted)">A neon themed marketing landing site with smooth scroll and animated hero.</p>
+            <p style="font-size:13px;margin-top:10px;color:var(--muted)">Tech: HTML, CSS, JS</p>
+          </article>
+          <article class="slide">
+            <h3>Elemental Clash UI</h3>
+            <p style="color:var(--muted)">A game-like UI incorporating segmented health bars, element buttons and dynamic backgrounds.</p>
+            <p style="font-size:13px;margin-top:10px;color:var(--muted)">Tech: JS, Canvas, CSS</p>
+          </article>
+          <article class="slide">
+            <h3>Portfolio Generator</h3>
+            <p style="color:var(--muted)">Template-based portfolio generator with one-click download and export.</p>
+            <p style="font-size:13px;margin-top:10px;color:var(--muted)">Tech: C#, Blazor (demo UI)</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-title"><h2>Contact</h2><div class="divider"></div></div>
+      <div class="contact-grid">
+        <div class="card contact-form">
+          <input type="text" placeholder="Your name" id="name">
+          <input type="email" placeholder="Email" id="email">
+          <textarea rows="5" placeholder="Message" id="message"></textarea>
+          <button class="btn" onclick="submitContact()">Send message</button>
+        </div>
+
+        <div class="card">
+          <h3>Get in touch</h3>
+          <p style="color:var(--muted)">Prefer email? Drop a line at <strong>twinkle@example.com</strong></p>
+          <div style="margin-top:12px">
+            <div style="font-size:13px;color:var(--muted)">Follow</div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <div class="ico" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent),var(--accent-2));font-weight:700;color:#02101a">in</div>
+              <div class="ico" style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent),var(--accent-2));font-weight:700;color:#02101a">gh</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>© <span id="year"></span> Twinkle Pal — Neon Portfolio</footer>
+  </div>
+
+  <!-- Floating Chatbot button -->
+  <div class="chatbot-btn" id="openChat" title="Open chat">💬</div>
+  <div class="theme-toggle" id="themeToggle" title="Switch theme">
+    <div class="moon">✨</div>
+  </div>
+
+  <!-- Chat drawer (hidden by default) -->
+  <div class="chatbot-drawer" id="chatDrawer" style="display:none">
+    <div class="chat-header">
+      <div style="font-weight:700">Neon AI</div>
+      <div style="color:var(--muted);font-size:13px">Frontend-only mock chatbot</div>
+    </div>
+    <div class="messages" id="messages">
+      <div class="msg bot">Hello! I'm a mock AI — ask me anything (I respond from a small list of replies).</div>
+    </div>
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Say something..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <button class="btn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // small helpers
+    const el = sel => document.querySelector(sel);
+    const q = sel => document.querySelectorAll(sel);
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Typing animation (Hero)
+    const phrases = ["I build neon interfaces.", "I love micro-interactions.", "I design with empathy."];
+    let tIndex = 0, chIndex = 0, forward = true;
+    const typingEl = document.getElementById('typing');
+    function tick(){
+      const current = phrases[tIndex];
+      if(forward){
+        chIndex++;
+        typingEl.textContent = current.slice(0,chIndex);
+        if(chIndex >= current.length){forward=false;setTimeout(tick,1200);return}
+      } else {
+        chIndex--;
+        typingEl.textContent = current.slice(0,chIndex);
+        if(chIndex<=0){forward=true;tIndex=(tIndex+1)%phrases.length}
+      }
+      setTimeout(tick,80 + Math.random()*80);
+    }
+    tick();
+
+    // Skills hover pop animation: add a tiny sparkle effect
+    document.querySelectorAll('.skill').forEach(s => {
+      s.addEventListener('mouseenter', () => {
+        // create small floating label
+        let popup = document.createElement('div');
+        popup.textContent = s.dataset.skill;
+        popup.style.position = 'absolute';
+        popup.style.bottom = '110%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translateX(-50%)';
+        popup.style.padding = '6px 8px';
+        popup.style.borderRadius = '8px';
+        popup.style.fontSize = '12px';
+        popup.style.background = 'linear-gradient(90deg,var(--accent),var(--accent-2))';
+        popup.style.color = '#02101a';
+        popup.style.boxShadow = '0 8px 30px rgba(0,0,0,0.5)';
+        popup.classList.add('skill-popup');
+        s.appendChild(popup);
+        setTimeout(()=>popup.style.opacity=1,10);
+      });
+      s.addEventListener('mouseleave', () => {
+        const p = s.querySelector('.skill-popup');
+        if(p){p.remove()}
+      });
+    });
+
+    // Carousel (simple slider)
+    const slidesWrap = el('#slides');
+    let slideIndex = 0;
+    const total = slidesWrap.children.length;
+    function goTo(i){
+      slideIndex = (i+total)%total;
+      slidesWrap.style.transform = `translateX(${-(slideIndex*(320+18))}px)`;
+      document.querySelectorAll('.dot').forEach((d,idx)=> d.classList.toggle('active', idx===0 ? false : idx-1===slideIndex));
+    }
+    // prev/next
+    el('#prev').addEventListener('click', ()=> goTo(slideIndex-1));
+    el('#next').addEventListener('click', ()=> goTo(slideIndex+1));
+    // simple autoplay
+    let playing = true; let autoplay;
+    function startAuto(){ autoplay = setInterval(()=>goTo(slideIndex+1), 3800); }
+    function stopAuto(){ clearInterval(autoplay) }
+    startAuto();
+    el('#playPause').addEventListener('click', ()=>{
+      playing = !playing;
+      if(playing) startAuto(); else stopAuto();
+      el('#playPause').classList.toggle('active', playing);
+    });
+
+    // Quick contact submit (frontend only)
+    function submitContact(){
+      const name = el('#name').value || 'Friend';
+      const email = el('#email').value || '—';
+      const message = el('#message').value || '—';
+      alert(`Thanks ${name}! (This demo does not send emails — it's frontend only.)`);
+      el('#name').value='';el('#email').value='';el('#message').value='';
+    }
+
+    // Mock AI Chatbot (frontend only)
+    const botReplies = [
+      "I like your neon style — looks sharp!",
+      "Try customizing the theme toggle — it adds personality.",
+      "I can't access the web, but I can suggest UI ideas.",
+      "Have you thought about adding an animated cursor?",
+      "Nice! Keep experimenting with micro-interactions."
+    ];
+    function sendMessage(){
+      const input = el('#chatInput');
+      const v = input.value.trim();
+      if(!v) return;
+      appendMsg('user', v);
+      input.value='';
+      // fake thinking
+      setTimeout(()=>{
+        appendMsg('bot', botReplies[Math.floor(Math.random()*botReplies.length)]);
+      }, 700 + Math.random()*1200);
+    }
+    function appendMsg(who, text){
+      const box = el('#messages');
+      const m = document.createElement('div');
+      m.className = 'msg ' + (who==='user' ? 'user' : 'bot');
+      m.textContent = text;
+      box.appendChild(m);
+      box.scrollTop = box.scrollHeight;
+    }
+    // open/close chat
+    el('#openChat').addEventListener('click', ()=>{
+      const d = el('#chatDrawer');
+      d.style.display = d.style.display==='none' ? 'flex' : 'none';
+    });
+
+    // Theme / floating button
+    const tBtn = el('#themeToggle');
+    let dark = true;
+    tBtn.addEventListener('click', ()=>{
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark? 'dark' : 'light');
+      // micro flip of accent
+      document.querySelectorAll('.ico, .avatar').forEach(n=> n.classList.toggle('glow', dark));
+    });
+
+    // accessible keyboard shortcuts
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='c' && (e.ctrlKey||e.metaKey)){
+        // ctrl/cmd + c opens chat
+        e.preventDefault(); el('#openChat').click();
+      }
+      if(e.key==='t' && (e.ctrlKey||e.metaKey)){
+        e.preventDefault(); tBtn.click();
+      }
+    });
+
+    // small: make slides responsive by recomputing translate on resize
+    window.addEventListener('resize', ()=>{
+      slidesWrap.style.transition = 'none';
+      slidesWrap.style.transform = `translateX(${-(slideIndex*(320+18))}px)`;
+      setTimeout(()=>slidesWrap.style.transition='transform .45s cubic-bezier(.2,.9,.2,1)',50);
+    });
+
+    // init styles for slides container
+    slidesWrap.style.transition = 'transform .45s cubic-bezier(.2,.9,.2,1)';
+
+    // enable focus outlines for keyboard users
+    document.body.addEventListener('keyup', (e)=>{ if(e.key==='Tab') document.documentElement.style.setProperty('--focus-outline','2px dashed var(--accent)') });
+
+    // initial go
+    goTo(0);
+  </script>
+</body>
+</html>
