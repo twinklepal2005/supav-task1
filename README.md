@@ -19,3 +19,8 @@ No build steps required — just open the file:
 open task1.html
 
 or simply drag it into your browser.
+
+
+<img width="2781" height="1522" alt="image" src="https://github.com/user-attachments/assets/683b8f04-3aae-472e-9d94-244b0f492ee3" />
+<img width="2786" height="1154" alt="image" src="https://github.com/user-attachments/assets/952f7722-e21b-49e1-94c3-0747cf77ad2a" />
+
